@@ -332,7 +332,7 @@ double GetScore(int x, int y, int r) {
 	for (int i = y; i < y + 4; i++) {
 		if (i > GH - 1) continue;
 		bool flag = true;
-		for (int j = 0; j < GW - 2; j++) 
+		for (int j = 1; j < GW - 2; j++) 
 			if (board[i][j] == 0) flag = false;
 		if (flag) line++;
 	}

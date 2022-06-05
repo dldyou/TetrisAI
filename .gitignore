@@ -30,4 +30,4 @@
 *.exe
 *.out
 *.app
-/.vs/TetrisAI/v16/Browse.VC.opendb
+*.opendb

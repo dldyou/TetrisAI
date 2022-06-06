@@ -38,5 +38,5 @@ void Reset(void);
 
 int GetCurrentBlock(void);
 double GetScore(void);
-void Training(void);
+void AI(void);
 #endif

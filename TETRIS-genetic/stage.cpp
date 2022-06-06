@@ -371,7 +371,7 @@ double GetScore() {
 	return score;
 }
 
-void Training(void) {
+void AI(void) {
 	int fx = curX, fy = curY;
 	double bestscore = -123456789, curscore = -123456789;
 	int bx = -1234, br = -1234;

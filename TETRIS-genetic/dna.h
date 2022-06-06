@@ -12,6 +12,7 @@ double GetW(int idx);
 class DNA {
 public:
 	void GenerateNew(void);
+	void best(void);
 	DNAW CrossOver(int parent1, int parent2);
 	DNAW Recombination(int parent1, int parent2);
 	DNAW MutationTransform(int parent);

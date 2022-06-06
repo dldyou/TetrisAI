@@ -17,6 +17,12 @@ void DNA::GenerateNew(void) {
 			dna[i].weight[j] = (double)(rand() % RAND_MAX - RAND_MAX / 2) / (RAND_MAX / 2);
 }
 
+void DNA::best(void) {
+	for (int i = 0; i < POPULATION; i++)
+		for (int j = 0; j < DNACNT; j++)
+			dna[i].weight[j] = (double)(rand() % RAND_MAX - RAND_MAX / 2) / (RAND_MAX / 2);
+}
+
 DNAW DNA::CrossOver(int parent1, int parent2) {
 	DNAW child;
 	int divP = rand() % DNACNT;

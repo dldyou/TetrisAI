@@ -3,6 +3,7 @@
 #include "stage.h"
 #include "key.h"
 #include "training.h"
+#include "dna.h"
 
 int main(void) {
 	srand((unsigned int)time(NULL));
@@ -10,6 +11,7 @@ int main(void) {
 	DrawBoard();
 	P();
 	ShowScore();
+	DNA::best();
 	while (1) {
 		Reset();
 		while (1) {
@@ -26,7 +28,7 @@ int main(void) {
 				//PLAYER
 				ProcessKeyInput();
 				//AI
-
+				AI();
 				//TRAINING
 				P();
 			}

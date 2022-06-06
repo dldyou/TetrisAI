@@ -18,7 +18,7 @@ bool BlockNext(void);
 bool DetectCollision(int x, int y);
 
 void AddBlockInfo(void);
-void SubBlockInfo(void);
+void SubBlockInfo(int x, int y);
 void ShowBlock(void);
 void RemoveBlock(void);
 
@@ -37,6 +37,6 @@ int SetSpeed(void);
 void Reset(void);
 
 int GetCurrentBlock(void);
-double GetScore(int x, int y, int r);
+double GetScore(void);
 void Training(void);
 #endif

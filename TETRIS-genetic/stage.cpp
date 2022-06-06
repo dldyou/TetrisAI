@@ -155,13 +155,14 @@ void AddBlockInfo(void) {
 		}
 	}
 }
-void SubBlockInfo(void) {
+void SubBlockInfo(int x, int y) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (block[GetCurrentBlock()][i][j] == 1)
 				board[curY + i][curX + j] = 0;
 		}
 	}
+	curX = x, curY = y, rotateState = 0;
 }
 
 void RemoveBlock(void) {
@@ -288,7 +289,7 @@ int GetCurrentBlock(void) {
 	return curblock + rotateState;
 }
 
-double GetScore(int x, int y, int r) {
+double GetScore() {
 	double score = 0;
 	// height, hole, barrier, bump
 	double heightAverage = 0;
@@ -329,7 +330,7 @@ double GetScore(int x, int y, int r) {
 	heightAverage /= (GW - 2);
 	// line
 	int line = 0;
-	for (int i = y; i < y + 4; i++) {
+	for (int i = curY; i < curY + 4; i++) {
 		if (i > GH - 1) continue;
 		bool flag = true;
 		for (int j = 1; j < GW - 2; j++) 
@@ -340,16 +341,16 @@ double GetScore(int x, int y, int r) {
 	int bottom = 0, int wall = 0, int blockcnt = 0;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			int X = x + j;
-			int Y = y + i;
+			int X = curX + j;
+			int Y = curY + i;
 			if (X > GW - 1 || Y > GH - 1) continue;
-			if (block[curblock + r][i][j] == 1) {
+			if (block[GetCurrentBlock()][i][j] == 1) {
 				if (X - 1 == 0 || X + 1 == GW - 1 || Y + 1 == GH - 1)
 					if (Y + 1 == GH - 1) bottom++;
 					else wall++;
 			}
 			else {
-				if (block[curblock + r][i][j - 1] != 1) 
+				if (block[GetCurrentBlock()][i][j - 1] != 1) 
 					if (board[Y][X - 1] == 1) blockcnt++;
 				if (block[curblock + r][i][j + 1] != 1)
 					if (board[Y][X + 1] == 1) blockcnt++;
@@ -371,19 +372,36 @@ double GetScore(int x, int y, int r) {
 }
 
 void Training(void) {
-	int wmove = 0, hmove = 0;
-	double bestscore = -123456789;
-	for (int i = 0; i < 4; i++) {
-		while (!DetectCollision(curX - 1 + wmove, curY + hmove)) wmove--;
-		while (!DetectCollision(curX - 1 + wmove, curY + hmove)) hmove++;
+	int fx = curX, fy = curY;
+	double bestscore = -123456789, curscore = -123456789;
+	int bx = -1234, br = -1234;
+	for (rotateState = 0; rotateState < 4; rotateState++) {
+		while (!DetectCollision(curX - 1, curY)) curX--;
+		Drop();
 		AddBlockInfo();
-
-		while (!DetectCollision(curX + 1 + wmove, curY + hmove)) {
-			if (!DetectCollision(curX - 1 + wmove, curY + hmove)) {
-				wmove++;
-				while (!DetectCollision(curX - 1 + wmove, curY + hmove)) hmove++;
-				AddBlockInfo();
+		curscore = GetScore();
+		if (curscore > bestscore) {
+			bestscore = curscore;
+			bx = curX; br = rotateState;
+		}
+		SubBlockInfo(fx, fy);
+		while (!DetectCollision(curX + 1 + wmove, curY)) {
+			curX++;
+			while (!DetectCollision(curX + wmove, curY + 1)) curY++;
+			AddBlockInfo();
+			curscore = GetScore();
+			if (curscore > bestscore) {
+				bestscore = curscore;
+				bx = curX, br = rotateState;
 			}
+			SubBlockInfo(fx, fy);
 		}
 	}
+	while (rotateState == br) Rotate();
+	while (curX == bx) {
+		if (curX > bx) ShiftLeft();
+		else if (curX < bx) ShiftRight();
+	}
+	Drop();
+	AddBlockInfo();
 }

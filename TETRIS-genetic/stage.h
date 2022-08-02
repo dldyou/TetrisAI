@@ -3,40 +3,40 @@
 #ifndef __STAGE_H__
 #define __STAGE_H__
 
-void P(void);
+void P(int parent);
 void Color(int color);
 void RemoveCursor(void);
-void gotoxy(int x, int y); 
-void InitNewBlockPos(int x, int y);
+void gotoxy(int x, int y);
+void InitNewBlockPos(int x, int y, int p);
 
-void DrawBoard(void);
-void DeleteNextBlock(int idx);
-void ShowNextBlock(int idx);
+void DrawBoard(int p);
+void DeleteNextBlock(int idx, int p);
+void ShowNextBlock(int idx, int p);
 
-void ChooseBlock(void);
+void ChooseBlock(int p);
 bool BlockNext(void);
 bool DetectCollision(int x, int y);
 
 void AddBlockInfo(void);
 void SubBlockInfo(int x, int y);
-void ShowBlock(void);
-void RemoveBlock(void);
+void ShowBlock(int p);
+void RemoveBlock(int p);
 
-void RemoveLine(void);
-void LineDown(int line);
-void ShowAllBlock(void);
+void RemoveLine(int parent);
+void LineDown(int line, int p);
+void ShowAllBlock(int p);
 
-bool BlockDown(void);
-void ShiftLeft(void);
-void ShiftRight(void);
-void Rotate(void);
-void Drop(void);
+bool BlockDown(int p);
+void ShiftLeft(int p);
+void ShiftRight(int p);
+void Rotate(int p);
+void Drop(int p);
 
-void ShowScore(void);
+void ShowScore(int p);
 int SetSpeed(void);
-void Reset(void);
+void Reset(int p);
 
 int GetCurrentBlock(void);
-double GetScore(void);
-void AI(void);
+double GetScore(int parent);
+void AI(int p);
 #endif

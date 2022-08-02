@@ -21,12 +21,12 @@ void ProcessKeyInput(void)
 			key = _getch();
 			if (key == ARROW) {
 				key = _getch();
-				if (key == LEFT) ShiftLeft();
-				else if (key == RIGHT) ShiftRight();
-				else if (key == UP) Rotate();
-				else if (key == DOWN) BlockDown();
+				if (key == LEFT) ShiftLeft(0);
+				else if (key == RIGHT) ShiftRight(0);
+				else if (key == UP) Rotate(0);
+				else if (key == DOWN) BlockDown(0);
 			}
-			else if (key == SPACE) Drop();
+			else if (key == SPACE) Drop(0);
 		}
 		if (i % keyDelayRate == 0)
 			Sleep(20);

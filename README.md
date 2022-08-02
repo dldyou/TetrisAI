@@ -1,3 +1,2 @@
 # TetrisAI
-if you press '0' -> start new model 
-else -> get before model & continue 
+press '0': start with new model / else keys: start with before model and continue learning
